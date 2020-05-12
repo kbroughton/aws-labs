@@ -7,8 +7,8 @@ services:
     environment:
       - AWS_DEFAULT_REGION=us-east-1
     volumes:
-      - ~/.aws:/root/.aws
-      - ~/aws-labs:/aws-labs
+      - ${HOME}/.aws:/root/.aws
+      - ${PWD}:/aws-labs
     ports:
       - "8889:8888"
     command: ["/bin/bash", "-l", "-c", "tail", "-f", "/dev/null"]
