@@ -1,4 +1,4 @@
-set -x
+
 
 source env.sh
 
@@ -8,7 +8,7 @@ if [ -z $1 ]; then
   echo "using low privilege keys found in keys.json"
   export AWS_ACCESS_KEY_ID=`cat keys.json | jq -r '.AccessKey.AccessKeyId'`
   export AWS_SECRET_ACCESS_KEY=`cat keys.json | jq -r '.AccessKey.SecretAccessKey'`
-  echo "----------------- The following fail because our discovered user has limited IAM permissions --------------------"
+  echo "----------------- The following will fail because our discovered user has limited IAM permissions --------------------"
 else
   echo "Using high privilege keys"
 fi
@@ -19,6 +19,7 @@ aws sts get-caller-identity
 user_arn=`aws sts get-caller-identity | jq '.Arn'`
 user_name=`echo $user_arn | sed 's|\"||g' | cut -d '/' -f 2`
 
+
 echo "See if any interesting inline policies are attached directly to the user."
 aws iam list-user-policies --user-name $USER_NAME
 
@@ -26,14 +27,13 @@ echo "No luck. Next see if any managed policies are attached to the user."
 aws iam list-attached-user-policies --user-name $USER_NAME
 
 echo "Also, no luck. The user must be in a group which grants the privileges."
-aws iam list-groups-for-user --user-name $USER_NAME
-group_name=`aws iam list-groups-for-user --user-name $USER_NAME | jq '.Groups[0].GroupName'`
+GROUP_NAME=`aws iam list-groups-for-user --user-name $USER_NAME | jq -r '.Groups[0].GroupName'`
 
 echo "First check for group inline policies"
-aws iam list-group-policies --group-name group_name
+aws iam list-group-policies --group-name $GROUP_NAME
 
 echo "Still no luck! Now check for attached group policies".
-aws iam list-attached-group-policies --group-name group_name
+aws iam list-attached-group-policies --group-name $GROUP_NAME
 
 echo "At last! To see what permissions the policy has, use list-policy-versions (because managed policies can have many versions)"
 echo "Then use get-policy-version to get the permissions using the latest or default version"
@@ -45,8 +45,6 @@ echo "Skipping to the results which show that we have iam list-roles and iam lam
 
 aws lambda list-functions --max-items 5 | jq '.Functions[].FunctionName'
 aws iam list-roles --max-items 5 
-
-# aws lambda list-functions | jq '.Functions[] | select(.FunctionName | test("kingme"))'
 
 
 aws iam list-policy-versions --policy-arn arn:aws:iam::aws:policy/AWSLambdaFullAccess

@@ -83,7 +83,7 @@ else
    set_var USER_NAME marketing-dave-${RAND}
    set_var POLICY_NAME $POLICY_NAME
    set_var DISCOVERED_ROLE_NAME discovered-role-with-iam-privs-${RAND}   
-   GROUP_NAME=PowerUserAccess-marketing-group-${RAND}
+   set_var GROUP_NAME PowerUserAccess-marketing-group-${RAND}
 fi
 
 #Call the create_group script to create the PowerUserAccess-marketing-group and attach all corresponding policies
@@ -97,16 +97,15 @@ aws iam add-user-to-group --user-name $USER_NAME --group-name $GROUP_NAME
 aws iam create-access-key --user-name $USER_NAME > keys.json
 
 
-#Create the discovered-role-with-iam-privs role, and tag it
+#Create the discovered-role-with-iam-privs role
 aws iam create-role --role-name $DISCOVERED_ROLE_NAME --assume-role-policy-document file://lambda_assume_policy_doc.json 
-aws iam tag-role --role-name $DISCOVERED_ROLE_NAME --tags "${PROJECT_TAG}" || echo "Tagging not supported"
 
 
 #Create the update_iam_policy (with the lambda_permissions_policy_doc.json as its document), 
 #and attach it to the discovered-role-with-iam-privs role
 
 aws iam create-policy --policy-name $POLICY_NAME --policy-document file://lambda_permissions_policy_doc.json > ${POLICY_NAME}_output.json
-policy_arn=`cat ${POLICY_NAME}_output.json | jq '.Policy.Arn' | sed 's/\"//g' ` 
+policy_arn=`cat ${POLICY_NAME}_output.json | jq -r '.Policy.Arn'` 
 aws iam attach-role-policy --role-name $DISCOVERED_ROLE_NAME --policy-arn $policy_arn
 
 #Set the POLICY_ARN value, to use it in other scripts

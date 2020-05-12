@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -x
+
 
 usage="
 		Creates and runs the lambda function that gives marketing-dave Administrator Access,
@@ -9,14 +9,13 @@ usage="
 
 if [ x$1 != x ]; then
     if [ $1 == "help" ] || [ $1 == "--help" ]; then
-      echo "${usage}"
+      echo "$usage"
       exit 0
 	fi
 fi
 
 source env.sh
 
-echo "$usage"
 
 echo "Here is where we simulate discovering marketing-dave's creds. We put them in environment varibles."
 echo "All calls from the rest of this script use  marketing-dave's credentials."
@@ -45,8 +44,7 @@ aws lambda invoke --function-name kingme-$RAND kingme.out --log-type Tail --quer
 sleep 5
 
 echo "Check that everything ran accordingly by listing the attached AdministratorAccess policy"
-aws iam list-attached-user-policies --user-name ${USER_NAME}
-result=`aws iam list-attached-user-policies --user-name $USER_NAME | jq '.AttachedPolicies[0].PolicyName'`
+result=''
 for i in {1..5}
 do
   if [ $result != '"AdministratorAccess"' ]; then
@@ -58,3 +56,4 @@ do
   
 done
 
+aws iam list-attached-user-policies --user-name $USER_NAME
