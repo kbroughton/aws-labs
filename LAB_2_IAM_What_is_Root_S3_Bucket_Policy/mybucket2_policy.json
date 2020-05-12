@@ -1,0 +1,24 @@
+{
+    "Statement": [
+        {
+            "Action": [
+                "s3:PutObject",
+                "s3:GetObject",
+                "s3:ListBucket"
+            ],
+            "Effect": "Allow",
+            "Principal": {
+                "AWS": [
+                    "arn:aws:iam::222222222222:root",
+                    "arn:aws:iam::222222222222:role/roleB2-30873"
+                ]
+            },
+            "Resource": [
+                "arn:aws:s3:::mybucket2-30873/*",
+                "arn:aws:s3:::mybucket2-30873"
+            ],
+            "Sid": "BucketPolicyForS3MyBucket2"
+        }
+    ],
+    "Version": "2012-10-17"
+}

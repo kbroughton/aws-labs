@@ -1,0 +1,10 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "AssumeRolePolicyForS3ReaderRoleByExternal",
+      "Effect": "Allow",
+      "Principal": {"AWS": "111111111111"},
+      "Action": "sts:AssumeRole"
+    }]
+}

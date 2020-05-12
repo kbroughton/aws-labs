@@ -1,0 +1,19 @@
+version: "3.4"
+services:
+  aws-labs:
+    image: aws-labs
+    build:
+      context: .
+    environment:
+      - AWS_DEFAULT_REGION=us-east-1
+    volumes:
+      - ${HOME}/.aws:/root/.aws
+      - ${PWD}:/aws-labs
+    ports:
+      - "8889:8888"
+    command: ["/bin/bash", "-l", "-c", "tail", "-f", "/dev/null"]
+    #command: ["/bin/bash", "-c", "python", "/praetorian_tools/cloudmapper/cloudmapper.py", "prepare", "--config", "config.demo.json", "--account", "demo", "--outputfile", "web/demo-data.json", "--instance-ips", "10.0.0.1"]
+    tty: true
+    working_dir: /aws-labs
+    #command: ["jupyter", "notebook", "--port=8888", "--ip=0.0.0.0", "--allow-root"]
+    command: ["./run.sh"]
