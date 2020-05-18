@@ -1,8 +1,16 @@
 {
-  "Version": "2012-10-17",
-  "Statement": [ {
-     "Effect": "Allow",
-     "NotAction": "iam:*",
-     "Resource": ["*"] 
+    "Version": "2012-10-17",
+    "Statement": [{
+        "Effect": "Allow",
+        "NotAction": "iam:*",
+        "Resource": ["*"]
+    }, {
+        "Effect": "Allow",
+        "Action": ["iam:ListGroupsForUser",
+            "iam:ListAttachedGroupPolicies",
+            "iam:ListPolicyVersions"
+        ],
+        "Resource": ["*"]
     }]
+
 }

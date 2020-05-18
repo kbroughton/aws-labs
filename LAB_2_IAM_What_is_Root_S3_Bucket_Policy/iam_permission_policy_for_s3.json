@@ -8,10 +8,10 @@
             ],
             "Effect": "Allow",
             "Resource": [
-                "arn:aws:s3:::mybucket1-30873/*",
-                "arn:aws:s3:::mybucket1-30873",
-                "arn:aws:s3:::mybucket2-30873/*",
-                "arn:aws:s3:::mybucket2-30873"
+                "arn:aws:s3:::mybucket1-123/*",
+                "arn:aws:s3:::mybucket1-123",
+                "arn:aws:s3:::mybucket2-123/*",
+                "arn:aws:s3:::mybucket2-123"
             ],
             "Sid": "PermissionPolicyForS3Access"
         }

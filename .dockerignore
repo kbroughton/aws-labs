@@ -13,3 +13,4 @@ kingme.out
 .ipynb_checkpoints/
 iam/
 secrets-remapping.yml
+.vs/

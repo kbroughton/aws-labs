@@ -9,15 +9,15 @@
             "Effect": "Allow",
             "Principal": {
                 "AWS": [
-                    "arn:aws:iam::111111111111:root",
-                    "arn:aws:iam::111111111111:role/roleA2-30873"
+                    "arn:aws:iam::362417992831:root",
+                    "arn:aws:iam::362417992831:role/aws-labs/roleA2-123"
                 ]
             },
             "Resource": [
-                "arn:aws:s3:::mybucket1-30873/*",
-                "arn:aws:s3:::mybucket1-30873"
+                "arn:aws:s3:::mybucket1-123/*",
+                "arn:aws:s3:::mybucket1-123"
             ],
-            "Sid": "AssumeRolePolicyForS3MyBucket1"
+            "Sid": "AssumeRolePolicyForS3ReaderRoleA"
         }
     ],
     "Version": "2012-10-17"
