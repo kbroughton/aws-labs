@@ -4,7 +4,7 @@ echo "Create a profile core_mon in ~/.aws/credentials with the id, secret and se
 read anykey
 
 echo "Assume the core account role/core_app_monitor"
-aws --profile core_mon sts assume-role --role-session-name cores-${RANDOME} --role-arn arn:aws:iam::057011330707:role/core_app_monitor
+aws --profile core_mon sts assume-role --role-session-name cores-${RANDOME} --role-arn arn:aws:iam::$AWS_APP1_ACCOUNT:role/core_app_monitor
 
 echo "Replace the stale values in temp_creds with new ones from the output above. Press any key when done"
 read anykey
@@ -15,7 +15,7 @@ echo "Check who you are"
 aws sts get-caller-identity
 
 echo "Use the creds for core account role/core_app_monitor to assume the app account role/global_app_monitor"
-aws sts assume-role --role-session-name app_mon-${RANDOM} --role-arn arn:aws:iam::279038159887:role/global_app_monitor
+aws sts assume-role --role-session-name app_mon-${RANDOM} --role-arn arn:aws:iam::$AWS_CORE_ACCOUNT:role/global_app_monitor
 
 echo "Replace the stale values in temp_global_app_mon_creeds with new ones from the output above. Press any key when done"
 read anykey
