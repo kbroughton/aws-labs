@@ -40,15 +40,28 @@ IAM Role Assume-Role Trust Policy
 ```
 
 ## Setup
+
+### By yourself
 In order to test this, you will want two accounts where you have been granted admin, since you will need the ability
 to create users, roles and policies. If an instructor wanted to run this in a class without granting full admin, then
 a permissions boundary which allows creating roles and users, but not policies could be tailored to this lab following
 the [AWS documentation](https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies_boundaries.html).
 
+### For a class or presentation
+Follow [this tutorial](https://tljh.jupyter.org/en/latest/install/amazon.html) to set up an EC2 instance running the
+JupyterHub, and set up as many users as you'd like. Then have them log in to the already set up Readme.ipynb.
+
+
 In Lab_1 we used a typical bash sed-replace script to modify our templates
 to the actual values needed to provision roles in our account. In this lab,
 we switch to templating using python and json.dumps. Please switch
 to [Readme.ipynb](Readme.ipynb) from here on to complete the six exercises in Lab_2.
+
+In order to do this, simply run
+
+```
+jupyter notebook Readme.ipynb
+```
 
 We summarize the results as follows:
 
